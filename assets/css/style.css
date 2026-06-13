@@ -201,11 +201,11 @@ p { color: var(--text-muted); line-height: 1.75; }
   text-overflow: ellipsis;
 }
 
-.header-inner {
+.header-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 72px;
+  height: 64px;
 }
 
 .logo {
@@ -236,26 +236,23 @@ p { color: var(--text-muted); line-height: 1.75; }
 .logo-text { display: flex; flex-direction: column; line-height: 1; }
 .logo-text .name {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 1.15rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: var(--primary);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   white-space: nowrap;
 }
-.logo-text .tagline {
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  letter-spacing: 0.05em;
-  font-weight: 500;
-  text-transform: uppercase;
-  margin-top: 2px;
-}
+.logo-text .tagline { display: none; }
 
 .nav-menu {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
+  border-top: 1px solid var(--border);
+  background: var(--white);
+  padding: 6px 0;
 }
 
 .nav-menu a {
@@ -296,7 +293,7 @@ p { color: var(--text-muted); line-height: 1.75; }
 
 /* ---- Page Banner (inner pages) ---- */
 .page-banner {
-  padding: 120px 0 60px;
+  padding: 158px 0 60px;
   background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--primary-dark) 100%);
   position: relative;
   overflow: hidden;
@@ -344,7 +341,7 @@ p { color: var(--text-muted); line-height: 1.75; }
   position: relative;
   background: var(--navy-dark);
   overflow: hidden;
-  padding-top: 104px;
+  padding-top: 142px;
 }
 
 .hero-bg {
@@ -1389,19 +1386,15 @@ p { color: var(--text-muted); line-height: 1.75; }
 .capability-band p  { color: rgba(255,255,255,0.75); font-size: 0.9rem; }
 
 /* ---- Mobile Navigation ---- */
-@media (max-width: 900px) {
-  .logo-text .tagline { display: none; }
-}
-
 @media (max-width: 600px) {
   .logo-mark { width: 36px; height: 36px; }
-  .logo-text .name { font-size: 1rem; }
+  .logo-text .name { font-size: 1.2rem; }
 }
 
 @media (max-width: 900px) {
   .nav-menu {
     position: fixed;
-    top: 72px; left: 0; right: 0;
+    top: 90px; left: 0; right: 0;
     background: var(--white);
     border-bottom: 1px solid var(--border);
     flex-direction: column;
