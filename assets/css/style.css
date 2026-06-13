@@ -186,6 +186,21 @@ p { color: var(--text-muted); line-height: 1.75; }
   box-shadow: var(--shadow-md);
 }
 
+.header-sub {
+  background: var(--light);
+  border-top: 1px solid var(--border);
+  padding: 5px 24px;
+  text-align: center;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .header-inner {
   display: flex;
   align-items: center;
@@ -329,7 +344,7 @@ p { color: var(--text-muted); line-height: 1.75; }
   position: relative;
   background: var(--navy-dark);
   overflow: hidden;
-  padding-top: 72px;
+  padding-top: 104px;
 }
 
 .hero-bg {
