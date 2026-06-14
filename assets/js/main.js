@@ -1,5 +1,5 @@
 /* =============================================
-   NEXUS ENGINEERING — Main JavaScript
+   RUMBAM ENGINEERS — Main JavaScript
    With Supabase Integration
    ============================================= */
 
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function updatePageMeta(project) {
-    document.title = `${project.title} — Nexus Engineering`;
+    document.title = `${project.title} — Rumbam Engineers`;
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
       metaDesc.setAttribute('content', project.short_description || '');
