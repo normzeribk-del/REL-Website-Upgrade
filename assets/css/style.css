@@ -452,6 +452,7 @@ p { color: var(--text-muted); line-height: 1.75; }
   position: relative;
   z-index: 2;
   max-width: 720px;
+  padding-top: 72px;
   padding-bottom: 24px;
 }
 
