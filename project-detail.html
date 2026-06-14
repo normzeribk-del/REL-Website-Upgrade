@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Details — Nexus Engineering</title>
+  <meta name="description" content="Explore this engineering project in detail - featuring comprehensive information about scope, challenges, solutions, and outcomes.">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header" id="siteHeader">
+    <div class="container">
+      <div class="header-top">
+        <a href="index.html" class="logo">
+          <div class="logo-mark"></div>
+          <div class="logo-text">
+            <span class="name">Nexus Engineering</span>
+          </div>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="header-sub">
+        Excellence in Engineering &bull; Innovation in Design &bull; Commitment to Quality
+      </div>
+      <nav class="nav-menu" id="navMenu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html" class="active">Projects</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="team.html">Our Team</a>
+        <div class="nav-cta">
+          <a href="contact.html" class="btn btn-accent btn-sm">Work With Us</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== PROJECT DETAIL HERO ========== -->
+  <section class="project-detail-hero">
+    <div class="hero-image"></div>
+    <div class="container">
+      <div class="project-detail-content" id="projectDetailContent">
+        <div class="breadcrumb" style="margin-bottom:24px;">
+          <a href="index.html">Home</a>
+          <span class="sep">/</span>
+          <a href="projects.html">Projects</a>
+          <span class="sep">/</span>
+          <span class="current">Project Details</span>
+        </div>
+        <h1 class="project-detail-title" id="projectTitle">Loading...</h1>
+        <p id="projectDescription" style="color:rgba(255,255,255,0.8);font-size:1.1rem;margin-top:16px;max-width:700px;"></p>
+        <div class="project-detail-meta" id="projectMeta"></div>
+        <a href="projects.html" class="btn btn-outline btn-sm" style="margin-top:24px;">
+          <i class="fas fa-arrow-left"></i> Back to Projects
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROJECT INFO CARDS ========== -->
+  <section class="section-pad-sm" style="padding-top:60px;">
+    <div class="container">
+      <div class="project-info-grid" id="projectInfoGrid">
+        <div class="project-info-card">
+          <h4>Category</h4>
+          <div class="value" id="projectCategory">-</div>
+        </div>
+        <div class="project-info-card">
+          <h4>Client</h4>
+          <div class="value" id="projectClient">-</div>
+        </div>
+        <div class="project-info-card">
+          <h4>Status</h4>
+          <div class="value" style="color:var(--success);">Completed</div>
+        </div>
+        <div class="project-info-card">
+          <h4>Location</h4>
+          <div class="value" id="projectLocation">-</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROJECT DETAILS SECTIONS ========== -->
+  <section class="section-pad" style="padding-top:40px;">
+    <div class="container">
+      <!-- Challenges -->
+      <div class="project-detail-section" id="challengesSection">
+        <div data-aos>
+          <span class="section-label">The Challenge</span>
+          <h2 class="section-title">Project Challenges</h2>
+          <div class="divider-accent"></div>
+        </div>
+        <div id="projectChallenges" style="padding-top:16px;">
+          <div class="loading-skeleton" style="height:100px;"></div>
+        </div>
+      </div>
+
+      <!-- Solutions -->
+      <div class="project-detail-section" id="solutionsSection">
+        <div data-aos>
+          <span class="section-label">Our Approach</span>
+          <h2 class="section-title">Engineering Solutions</h2>
+          <div class="divider-accent"></div>
+        </div>
+        <div id="projectSolutions" style="padding-top:16px;">
+          <div class="loading-skeleton" style="height:100px;"></div>
+        </div>
+      </div>
+
+      <!-- Outcomes -->
+      <div class="project-detail-section" id="outcomesSection">
+        <div data-aos>
+          <span class="section-label">Results</span>
+          <h2 class="section-title">Project Outcomes</h2>
+          <div class="divider-accent"></div>
+        </div>
+        <div id="projectOutcomes" style="padding-top:16px;">
+          <div class="loading-skeleton" style="height:100px;"></div>
+        </div>
+      </div>
+
+      <!-- Gallery -->
+      <div class="project-detail-section" id="gallerySection">
+        <div data-aos>
+          <span class="section-label">Visual Documentation</span>
+          <h2 class="section-title">Project Gallery</h2>
+          <div class="divider-accent"></div>
+        </div>
+        <div class="project-detail-gallery" id="projectGallery">
+          <!-- Gallery images will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RELATED PROJECTS CTA ========== -->
+  <section class="section-pad bg-light">
+    <div class="container">
+      <div class="text-center" data-aos>
+        <span class="section-label">Explore More</span>
+        <h2 class="section-title">Related Projects</h2>
+        <div class="divider-accent center"></div>
+        <p class="section-subtitle">Discover other engineering projects in our portfolio.</p>
+      </div>
+      <div class="text-center" style="margin-top:32px;">
+        <a href="projects.html" class="btn btn-primary">
+          <i class="fas fa-folder-open"></i> View All Projects
+        </a>
+        <a href="gallery.html" class="btn btn-outline-primary" style="margin-left:12px;">
+          <i class="fas fa-images"></i> View Gallery
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section class="cta-banner">
+    <div class="container">
+      <div>
+        <h2>Have a Similar Project?</h2>
+        <p>Our team is ready to discuss your engineering requirements and develop innovative solutions tailored to your needs.</p>
+      </div>
+      <div class="cta-contact">
+        <a href="mailto:info@nexusengineering.com">
+          <i class="fas fa-envelope" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.1);border-radius:6px;"></i>
+          info@nexusengineering.com
+        </a>
+        <a href="contact.html" class="btn btn-accent" style="margin-top:8px;">
+          <i class="fas fa-paper-plane"></i> Start a Project
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-mark"></div>
+            <div class="logo-text">
+              <span class="name">Nexus Engineering</span>
+              <span class="tagline">Limited</span>
+            </div>
+          </a>
+          <p>A leading engineering consultancy delivering innovative solutions for complex infrastructure projects worldwide since 1998.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="team.html">Our Team</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Our Services</h5>
+          <ul>
+            <li><a href="services.html#civil">Civil Engineering</a></li>
+            <li><a href="services.html#transport">Transport & Infrastructure</a></li>
+            <li><a href="services.html#structural">Structural Engineering</a></li>
+            <li><a href="services.html#environmental">Environmental & Utilities</a></li>
+            <li><a href="services.html#management">Project Management</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact Us</h5>
+          <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>123 Engineering Boulevard, Metro City, MC 12345</span></div>
+          <div class="footer-contact-item"><i class="fas fa-phone"></i><a href="tel:+15551234567">+1 (555) 123-4567</a></div>
+          <div class="footer-contact-item"><i class="fas fa-envelope"></i><a href="mailto:info@nexusengineering.com">info@nexusengineering.com</a></div>
+          <div class="footer-contact-item"><i class="fas fa-clock"></i><span>Mon – Fri: 8:00 AM – 6:00 PM</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 Nexus Engineering Limited. All rights reserved.</span>
+        <span>Crafting Tomorrow's Infrastructure</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== LIGHTBOX ========== -->
+  <div class="lightbox" id="lightbox" onclick="if(event.target === this) closeLightbox()">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLightbox()">
+        <i class="fas fa-times"></i>
+      </button>
+      <button class="lightbox-nav lightbox-prev" onclick="prevImage()">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <img src="" alt="Gallery Image" class="lightbox-image" id="lightboxImage">
+      <button class="lightbox-nav lightbox-next" onclick="nextImage()">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+      <div class="lightbox-info">
+        <div class="lightbox-title" id="lightboxTitle"></div>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script src="assets/js/main.js" type="module"></script>
+</body>
+</html>
