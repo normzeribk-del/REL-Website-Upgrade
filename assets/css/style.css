@@ -171,6 +171,14 @@ p { color: var(--text-muted); line-height: 1.75; }
 .btn-lg { padding: 16px 36px; font-size: 1rem; }
 .btn-sm { padding: 9px 20px; font-size: 0.82rem; }
 
+/* Ensure buttons have enough breathing room and stay visible in stacked layouts */
+.btn,
+.hero-ctas .btn,
+.cta-contact .btn,
+.nav-cta .btn {
+  min-height: 44px;
+}
+
 /* ---- Header / Navigation ---- */
 .site-header {
   position: fixed;
@@ -434,7 +442,13 @@ p { color: var(--text-muted); line-height: 1.75; }
   max-width: 560px;
 }
 
-.hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  row-gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
 
 .hero-stats {
   position: absolute;
@@ -690,7 +704,9 @@ p { color: var(--text-muted); line-height: 1.75; }
   display: flex;
   flex-direction: column;
   gap: 10px;
+  row-gap: 12px;
   flex-shrink: 0;
+  align-items: flex-start;
 }
 
 .cta-contact a {
@@ -1460,7 +1476,10 @@ p { color: var(--text-muted); line-height: 1.75; }
   .projects-grid { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr 1fr; }
   .why-grid { grid-template-columns: 1fr; }
-  .hero-ctas { flex-direction: column; }
+  .hero-ctas { flex-direction: column; align-items: stretch; }
   .hero-ctas .btn { width: 100%; justify-content: center; }
+  .cta-contact { width: 100%; align-items: stretch; }
+  .cta-contact a,
+  .cta-contact .btn { width: 100%; justify-content: center; }
   .highlights-inner { grid-template-columns: repeat(2, 1fr); }
 }
