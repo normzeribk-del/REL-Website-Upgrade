@@ -676,14 +676,16 @@ p { color: var(--text-muted); line-height: 1.75; }
 .project-card {
   border-radius: var(--radius-md);
   overflow: hidden;
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: linear-gradient(160deg, rgba(0,168,232,0.10) 0%, rgba(0,76,153,0.06) 100%);
+  border: 1px solid rgba(0,168,232,0.20);
   transition: all var(--transition);
   display: flex;
   flex-direction: column;
 }
 
 .project-card:hover {
+  background: linear-gradient(160deg, rgba(0,168,232,0.18) 0%, rgba(0,76,153,0.12) 100%);
+  border-color: var(--primary);
   box-shadow: var(--shadow-lg);
   transform: translateY(-6px);
 }
@@ -903,8 +905,8 @@ p { color: var(--text-muted); line-height: 1.75; }
 }
 
 .project-info-card {
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: linear-gradient(160deg, rgba(0,168,232,0.10) 0%, rgba(0,76,153,0.06) 100%);
+  border: 1px solid rgba(0,168,232,0.20);
   border-radius: var(--radius-md);
   padding: 24px;
 }
@@ -1259,14 +1261,15 @@ p { color: var(--text-muted); line-height: 1.75; }
 
 /* ---- Values/Cards grid ---- */
 .value-card {
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: linear-gradient(160deg, rgba(0,168,232,0.10) 0%, rgba(0,76,153,0.06) 100%);
+  border: 1px solid rgba(0,168,232,0.20);
   border-radius: var(--radius-md);
   padding: 32px 28px;
   transition: all var(--transition);
 }
 
 .value-card:hover {
+  background: linear-gradient(160deg, rgba(0,168,232,0.18) 0%, rgba(0,76,153,0.12) 100%);
   border-color: var(--primary);
   box-shadow: var(--shadow-md);
   transform: translateY(-4px);
@@ -1292,8 +1295,8 @@ p { color: var(--text-muted); line-height: 1.75; }
   display: grid;
   grid-template-columns: 80px 1fr;
   gap: 28px;
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: linear-gradient(160deg, rgba(0,168,232,0.10) 0%, rgba(0,76,153,0.06) 100%);
+  border: 1px solid rgba(0,168,232,0.20);
   border-radius: var(--radius-md);
   padding: 36px;
   margin-bottom: 24px;
@@ -1361,8 +1364,8 @@ p { color: var(--text-muted); line-height: 1.75; }
 }
 
 .team-card {
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: linear-gradient(160deg, rgba(0,168,232,0.10) 0%, rgba(0,76,153,0.06) 100%);
+  border: 1px solid rgba(0,168,232,0.20);
   border-radius: var(--radius-md);
   overflow: hidden;
   transition: all var(--transition);
@@ -1370,6 +1373,8 @@ p { color: var(--text-muted); line-height: 1.75; }
 }
 
 .team-card:hover {
+  background: linear-gradient(160deg, rgba(0,168,232,0.18) 0%, rgba(0,76,153,0.12) 100%);
+  border-color: var(--primary);
   box-shadow: var(--shadow-lg);
   transform: translateY(-6px);
 }
@@ -1480,8 +1485,8 @@ p { color: var(--text-muted); line-height: 1.75; }
 
 /* ---- Contact Form ---- */
 .contact-form-card {
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: linear-gradient(160deg, rgba(0,168,232,0.10) 0%, rgba(0,76,153,0.06) 100%);
+  border: 1px solid rgba(0,168,232,0.20);
   border-radius: var(--radius-lg);
   padding: 44px 40px;
 }
@@ -1668,8 +1673,8 @@ p { color: var(--text-muted); line-height: 1.75; }
 .mvv-card {
   padding: 40px 32px;
   border-radius: var(--radius-md);
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: linear-gradient(160deg, rgba(0,168,232,0.10) 0%, rgba(0,76,153,0.06) 100%);
+  border: 1px solid rgba(0,168,232,0.20);
   position: relative;
   overflow: hidden;
 }
