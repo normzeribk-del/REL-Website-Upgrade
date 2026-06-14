@@ -15,8 +15,15 @@ const CONTACT_FUNCTION_URL = `${supabaseUrl}/functions/v1/contact-submit`;
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  // ---- Sticky Header shadow on scroll ----
+  // ---- Sticky Header shadow on scroll + badge alignment ----
   const header = document.getElementById('siteHeader');
+  function syncHeaderHeight() {
+    if (header) {
+      document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+    }
+  }
+  syncHeaderHeight();
+  window.addEventListener('resize', syncHeaderHeight, { passive: true });
   if (header) {
     window.addEventListener('scroll', function () {
       if (window.scrollY > 10) {

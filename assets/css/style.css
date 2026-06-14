@@ -455,6 +455,18 @@ p { color: var(--text-muted); line-height: 1.75; }
   padding-bottom: 24px;
 }
 
+.hero-badge-anchor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: max(24px, calc((100% - 1200px) / 2 + 24px));
+  padding-top: calc(var(--header-h, 120px) + 16px);
+}
+
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -468,7 +480,6 @@ p { color: var(--text-muted); line-height: 1.75; }
   text-transform: uppercase;
   padding: 10px 16px;
   border-radius: 100px;
-  margin-bottom: 24px;
   line-height: 1.4;
 }
 
