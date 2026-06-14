@@ -79,8 +79,8 @@ p { color: var(--text-muted); line-height: 1.75; }
   padding: 0 24px;
 }
 
-.section-pad { padding: 80px 0; }
-.section-pad-sm { padding: 56px 0; }
+.section-pad { padding: 80px 0; background: linear-gradient(180deg, rgba(0,168,232,0.14) 0%, rgba(0,76,153,0.08) 100%); }
+.section-pad-sm { padding: 56px 0; background: linear-gradient(180deg, rgba(0,168,232,0.14) 0%, rgba(0,76,153,0.08) 100%); }
 
 .services-section {
   background: linear-gradient(180deg, rgba(0,168,232,0.14) 0%, rgba(0,76,153,0.08) 100%);
@@ -1814,6 +1814,10 @@ p { color: var(--text-muted); line-height: 1.75; }
 .bg-light  { background: var(--light); }
 .bg-light-2 { background: var(--light-2); }
 .bg-navy   { background: var(--navy); }
+.section-pad.bg-light,
+.section-pad-sm.bg-light {
+  background: linear-gradient(180deg, rgba(0,168,232,0.10) 0%, rgba(0,76,153,0.06) 100%), var(--light);
+}
 
 /* ---- Loading States ---- */
 .loading-skeleton {
