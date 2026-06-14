@@ -1,0 +1,14 @@
+{
+  "name": "rumbam-engineers",
+  "version": "1.0.0",
+  "description": "Rumbam Engineers Limited — Engineering Solutions for Papua New Guinea",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}
