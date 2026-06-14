@@ -350,6 +350,7 @@ p { color: var(--text-muted); line-height: 1.75; }
   background: var(--navy-dark);
   overflow: hidden;
   padding-top: 142px;
+  padding-bottom: 210px;
 }
 
 .hero-bg {
@@ -408,6 +409,7 @@ p { color: var(--text-muted); line-height: 1.75; }
   position: relative;
   z-index: 2;
   max-width: 700px;
+  padding-bottom: 24px;
 }
 
 .hero-badge {
@@ -1451,6 +1453,8 @@ p { color: var(--text-muted); line-height: 1.75; }
 
 @media (max-width: 768px) {
   .section-pad { padding: 56px 0; }
+  .hero { padding-bottom: 260px; }
+  .hero-content { padding-bottom: 12px; }
   .hero-stats-inner { grid-template-columns: repeat(2, 1fr); }
   .stat-item { border-right: none; border-bottom: 1px solid rgba(91,120,176,0.2); }
   .stat-item:nth-child(odd) { border-right: 1px solid rgba(91,120,176,0.2); }
