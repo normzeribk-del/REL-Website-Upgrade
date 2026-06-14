@@ -82,6 +82,10 @@ p { color: var(--text-muted); line-height: 1.75; }
 .section-pad { padding: 80px 0; }
 .section-pad-sm { padding: 56px 0; }
 
+.services-section {
+  background: linear-gradient(180deg, rgba(0,168,232,0.06) 0%, rgba(0,76,153,0.04) 100%);
+}
+
 .section-label {
   display: inline-block;
   font-size: 0.78rem;
