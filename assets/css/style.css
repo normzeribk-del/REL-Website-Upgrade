@@ -451,7 +451,11 @@ p { color: var(--text-muted); line-height: 1.75; }
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 720px;
+  max-width: 900px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
   padding-top: 72px;
   padding-bottom: 24px;
 }
@@ -506,7 +510,9 @@ p { color: var(--text-muted); line-height: 1.75; }
   color: rgba(255,255,255,0.75);
   line-height: 1.8;
   margin-bottom: 44px;
-  max-width: 580px;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-ctas {
@@ -515,6 +521,7 @@ p { color: var(--text-muted); line-height: 1.75; }
   row-gap: 14px;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
 }
 
 .hero-stats {
