@@ -402,7 +402,7 @@ p { color: var(--text-muted); line-height: 1.75; }
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(135deg, rgba(7,15,24,0.97) 0%, rgba(13,27,42,0.9) 40%, rgba(0,76,153,0.8) 100%);
+    radial-gradient(ellipse at center, rgba(0,76,153,0.7) 0%, rgba(13,27,42,0.85) 55%, rgba(7,15,24,0.98) 100%);
   z-index: 1;
 }
 
