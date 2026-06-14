@@ -457,30 +457,31 @@ p { color: var(--text-muted); line-height: 1.75; }
 
 .hero-badge-anchor {
   position: absolute;
-  top: 0;
+  top: var(--header-h, 120px);
   left: 0;
   right: 0;
   z-index: 3;
   display: flex;
-  justify-content: flex-start;
-  padding-left: max(24px, calc((100% - 1200px) / 2 + 24px));
-  padding-top: calc(var(--header-h, 120px) + 16px);
+  justify-content: center;
+  padding-top: 0;
 }
 
 .hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: rgba(0,168,232,0.12);
-  border: 1px solid rgba(0,168,232,0.3);
+  background: rgba(0,168,232,0.15);
+  border: 1px solid rgba(0,168,232,0.4);
+  border-top: 2px solid var(--accent);
   color: var(--accent-light);
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 10px 16px;
-  border-radius: 100px;
+  padding: 10px 20px;
+  border-radius: 0 0 100px 100px;
   line-height: 1.4;
+  backdrop-filter: blur(8px);
 }
 
 .hero-badge i {
