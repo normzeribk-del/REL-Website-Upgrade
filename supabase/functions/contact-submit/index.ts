@@ -18,59 +18,101 @@ interface ContactSubmission {
   preferred_contact?: string;
 }
 
+const PROJECT_TYPE_LABELS: Record<string, string> = {
+  civil: "Civil Engineering",
+  transport: "Transport & Infrastructure",
+  structural: "Structural Engineering",
+  environmental: "Environmental & Utilities",
+  "project-management": "Project Management & Advisory",
+  feasibility: "Feasibility Study",
+  capability: "Capability Statement Request",
+  other: "Other / General Enquiry",
+};
+
+async function sendEmailNotification(submission: ContactSubmission & { id: string }) {
+  const resendKey = Deno.env.get("RESEND_API_KEY");
+  if (!resendKey) return;
+
+  const projectTypeLabel = PROJECT_TYPE_LABELS[submission.project_type] ?? submission.project_type;
+  const preferredContact = submission.preferred_contact ?? "email";
+
+  const htmlBody = `
+    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#1a2b4a;">
+      <div style="background:#003580;padding:24px 32px;border-radius:8px 8px 0 0;">
+        <h2 style="color:#ffffff;margin:0;font-size:1.2rem;">New Contact Form Submission</h2>
+        <p style="color:rgba(255,255,255,0.7);margin:4px 0 0;font-size:0.85rem;">Rumbam Engineers Limited — rumbamengineers.com</p>
+      </div>
+      <div style="background:#f8fafc;padding:28px 32px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 8px 8px;">
+        <table style="width:100%;border-collapse:collapse;">
+          <tr><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-weight:600;width:160px;color:#64748b;font-size:0.85rem;">Name</td><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">${submission.first_name} ${submission.last_name}</td></tr>
+          <tr><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-weight:600;color:#64748b;font-size:0.85rem;">Email</td><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;"><a href="mailto:${submission.email}" style="color:#0066cc;">${submission.email}</a></td></tr>
+          ${submission.phone ? `<tr><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-weight:600;color:#64748b;font-size:0.85rem;">Phone</td><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;"><a href="tel:${submission.phone}" style="color:#0066cc;">${submission.phone}</a></td></tr>` : ""}
+          ${submission.company ? `<tr><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-weight:600;color:#64748b;font-size:0.85rem;">Company</td><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">${submission.company}</td></tr>` : ""}
+          <tr><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-weight:600;color:#64748b;font-size:0.85rem;">Service Type</td><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">${projectTypeLabel}</td></tr>
+          <tr><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-weight:600;color:#64748b;font-size:0.85rem;">Preferred Contact</td><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;text-transform:capitalize;">${preferredContact}</td></tr>
+        </table>
+        <div style="margin-top:20px;">
+          <div style="font-weight:600;color:#64748b;font-size:0.85rem;margin-bottom:8px;">Message</div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:16px;line-height:1.6;white-space:pre-wrap;">${submission.message}</div>
+        </div>
+        <div style="margin-top:20px;padding:12px 16px;background:#eff6ff;border-radius:6px;font-size:0.8rem;color:#64748b;">
+          Submission ID: ${submission.id}
+        </div>
+      </div>
+    </div>
+  `;
+
+  await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${resendKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: "Rumbam Engineers Contact Form <noreply@rumbamengineers.com>",
+      to: ["brumbam@rumbamengineers.com"],
+      reply_to: submission.email,
+      subject: `New Enquiry: ${submission.first_name} ${submission.last_name} — ${projectTypeLabel}`,
+      html: htmlBody,
+    }),
+  });
+}
+
 Deno.serve(async (req: Request) => {
-  // Handle preflight requests
   if (req.method === "OPTIONS") {
-    return new Response(null, {
-      status: 200,
-      headers: corsHeaders,
-    });
+    return new Response(null, { status: 200, headers: corsHeaders });
   }
 
-  // Only allow POST requests
   if (req.method !== "POST") {
     return new Response(
       JSON.stringify({ error: "Method not allowed" }),
-      {
-        status: 405,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+      { status: 405, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
 
   try {
-    // Parse request body
     const body: ContactSubmission = await req.json();
 
-    // Validate required fields
     if (!body.first_name || !body.last_name || !body.email || !body.project_type || !body.message) {
       return new Response(
         JSON.stringify({ error: "Missing required fields" }),
-        {
-          status: 400,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(body.email)) {
       return new Response(
         JSON.stringify({ error: "Invalid email format" }),
-        {
-          status: 400,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    // Create Supabase client
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+    );
 
-    // Insert contact submission
     const { data, error } = await supabase
       .from("contact_submissions")
       .insert({
@@ -91,33 +133,30 @@ Deno.serve(async (req: Request) => {
       console.error("Database error:", error);
       return new Response(
         JSON.stringify({ error: "Failed to submit contact form" }),
-        {
-          status: 500,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    // Return success response
+    // Send email notification — failure does not block the submission response
+    try {
+      await sendEmailNotification({ ...body, id: data.id });
+    } catch (emailErr) {
+      console.error("Email notification failed:", emailErr);
+    }
+
     return new Response(
       JSON.stringify({
         success: true,
         message: "Thank you for your message! We will be in touch within one business day.",
         id: data.id,
       }),
-      {
-        status: 200,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (err) {
     console.error("Server error:", err);
     return new Response(
       JSON.stringify({ error: "Internal server error" }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
 });
