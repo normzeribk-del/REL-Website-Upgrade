@@ -458,6 +458,8 @@ p { color: var(--text-muted); line-height: 1.75; }
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  overflow: hidden;
+  max-width: 480px;
   white-space: nowrap;
   background: rgba(0,168,232,0.15);
   border: 1px solid rgba(0,168,232,0.4);
@@ -471,6 +473,21 @@ p { color: var(--text-muted); line-height: 1.75; }
   border-radius: 0 0 100px 100px;
   line-height: 1.4;
   backdrop-filter: blur(8px);
+}
+
+.hero-badge-scroll {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: badge-scroll 14s linear infinite;
+}
+
+.hero-badge-scroll span {
+  white-space: nowrap;
+}
+
+@keyframes badge-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .hero-badge i {
