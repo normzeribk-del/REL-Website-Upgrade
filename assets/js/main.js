@@ -241,13 +241,49 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const infoGrid = document.getElementById('projectInfoGrid');
-    if (infoGrid && project.scope) {
-      infoGrid.innerHTML = `
-        <div class="project-info-card">
-          <h4>Project Scope</h4>
-          <div class="value">${Array.isArray(project.scope) ? project.scope.join(', ') : project.scope}</div>
+    if (infoGrid) {
+      const cards = [];
+
+      if (project.scope) {
+        const pills = Array.isArray(project.scope)
+          ? project.scope.map(s => `<span class="scope-pill">${s}</span>`).join('')
+          : `<span class="scope-pill">${project.scope}</span>`;
+        cards.push({ icon: 'fas fa-clipboard-list', label: 'Project Scope', value: pills, wide: true });
+      }
+
+      if (project.category) {
+        cards.push({ icon: 'fas fa-tag', label: 'Category', value: formatCategory(project.category) });
+      }
+
+      if (project.client) {
+        cards.push({ icon: 'fas fa-building', label: 'Client', value: project.client });
+      }
+
+      if (project.year) {
+        cards.push({ icon: 'fas fa-calendar-alt', label: 'Year', value: project.year });
+      }
+
+      if (project.location) {
+        cards.push({ icon: 'fas fa-map-marker-alt', label: 'Location', value: project.location });
+      }
+
+      if (project.project_value) {
+        cards.push({ icon: 'fas fa-coins', label: 'Project Value', value: project.project_value, accent: true });
+      }
+
+      if (project.duration) {
+        cards.push({ icon: 'fas fa-clock', label: 'Duration', value: project.duration });
+      }
+
+      cards.push({ icon: 'fas fa-circle-check', label: 'Status', value: 'Completed', success: true });
+
+      infoGrid.innerHTML = cards.map(card => `
+        <div class="project-info-card${card.wide ? ' pic-wide' : ''}">
+          <div class="pic-icon"><i class="${card.icon}"></i></div>
+          <h4>${card.label}</h4>
+          <div class="value${card.success ? ' pic-success' : card.accent ? ' pic-accent' : ''}${card.wide ? ' pic-pills' : ''}">${card.value}</div>
         </div>
-      ` + infoGrid.innerHTML;
+      `).join('');
     }
 
     const challengesSection = document.getElementById('projectChallenges');
