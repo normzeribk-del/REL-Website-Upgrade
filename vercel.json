@@ -1,4 +1,15 @@
 {
+  "buildCommand": "",
+  "outputDirectory": ".",
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/about",          "destination": "/about.html" },
+    { "source": "/services",       "destination": "/services.html" },
+    { "source": "/projects",       "destination": "/projects.html" },
+    { "source": "/gallery",        "destination": "/gallery.html" },
+    { "source": "/team",           "destination": "/team.html" },
+    { "source": "/contact",        "destination": "/contact.html" },
+    { "source": "/project-detail", "destination": "/project-detail.html" }
+  ]
 }
