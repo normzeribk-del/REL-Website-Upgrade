@@ -162,6 +162,8 @@ document.addEventListener('DOMContentLoaded', function () {
           <p>${project.short_description || ''}</p>
           <div class="project-meta">
             ${project.location ? `<span><i class="fas fa-map-marker-alt"></i> ${project.location}</span>` : ''}
+            ${project.project_value ? `<span><i class="fas fa-coins"></i> ${project.project_value}</span>` : ''}
+            ${project.duration ? `<span><i class="fas fa-clock"></i> ${project.duration}</span>` : ''}
           </div>
         </div>
       </div>
@@ -213,30 +215,31 @@ document.addEventListener('DOMContentLoaded', function () {
     const metaContainer = document.getElementById('projectMeta');
     if (metaContainer) {
       metaContainer.innerHTML = `
-        <div class="project-detail-meta-item">
-          <div class="label">Client</div>
-          <div class="value">${project.client || 'Confidential'}</div>
-        </div>
-        <div class="project-detail-meta-item">
-          <div class="label">Location</div>
-          <div class="value">${project.location || 'Various'}</div>
-        </div>
-        <div class="project-detail-meta-item">
-          <div class="label">Year</div>
-          <div class="value">${project.year || 'Ongoing'}</div>
-        </div>
-        ${project.project_value ? `
-          <div class="project-detail-meta-item">
-            <div class="label">Project Value</div>
-            <div class="value">${project.project_value}</div>
-          </div>
-        ` : ''}
-        ${project.duration ? `
-          <div class="project-detail-meta-item">
-            <div class="label">Duration</div>
-            <div class="value">${project.duration}</div>
-          </div>
-        ` : ''}
+        <div class="project-summary-kicker">Project Snapshot</div>
+        <table class="project-summary-table">
+          <tbody>
+            <tr>
+              <th>Client</th>
+              <td>${project.client || 'Confidential'}</td>
+            </tr>
+            <tr>
+              <th>Location</th>
+              <td>${project.location || 'Various'}</td>
+            </tr>
+            <tr>
+              <th>Year</th>
+              <td>${project.year || 'Ongoing'}</td>
+            </tr>
+            <tr>
+              <th>Project Value</th>
+              <td>${project.project_value || 'Not specified'}</td>
+            </tr>
+            <tr>
+              <th>Duration</th>
+              <td>${project.duration || 'Not specified'}</td>
+            </tr>
+          </tbody>
+        </table>
       `;
     }
 
@@ -254,6 +257,28 @@ document.addEventListener('DOMContentLoaded', function () {
       const statusEl = document.getElementById('projectStatus');
       if (statusEl) {
         statusEl.textContent = project.completed_date ? 'Completed' : (project.status === 'published' ? 'Completed' : 'In Progress');
+      }
+
+      if (project.project_value) {
+        const valueCard = document.createElement('div');
+        valueCard.className = 'project-info-card';
+        valueCard.innerHTML = `
+          <div class="pic-icon-wrap"><i class="fas fa-coins"></i></div>
+          <h4>Project Value</h4>
+          <div class="value">${project.project_value}</div>
+        `;
+        infoGrid.appendChild(valueCard);
+      }
+
+      if (project.duration) {
+        const durationCard = document.createElement('div');
+        durationCard.className = 'project-info-card';
+        durationCard.innerHTML = `
+          <div class="pic-icon-wrap"><i class="fas fa-clock"></i></div>
+          <h4>Duration</h4>
+          <div class="value">${project.duration}</div>
+        `;
+        infoGrid.appendChild(durationCard);
       }
 
       if (project.scope && project.scope.length > 0) {
@@ -313,38 +338,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   async function loadGallery() {
-    try {
-      const { data: images, error } = await supabase
-        .from('gallery_images')
-        .select('*')
-        .eq('status', 'published')
-        .order('display_order', { ascending: true });
-
-      if (error) throw error;
-
-      if (images && images.length > 0) {
-        window.galleryImages = images;
-        renderGallery(images);
-      }
-    } catch (err) {
-      console.error('Error loading gallery:', err);
-    }
-  }
-
-  function renderGallery(images) {
-    galleryContainer.innerHTML = images.map((img, idx) => `
-      <div class="gallery-item" data-category="${img.category}" data-aos onclick="openLightbox(${idx})">
-        <img src="${img.thumbnail_url || img.image_url}" alt="${img.title}" loading="lazy">
-        <div class="gallery-item-overlay">
-          <div>
-            <div class="gallery-item-title">${img.title}</div>
-            <div class="gallery-item-category">${formatCategory(img.category)}</div>
-          </div>
-        </div>
-      </div>
-    `).join('');
-
-    initAnimations();
+    // Gallery uses local images from static HTML only
   }
 
   // ---- Gallery Filter ----
