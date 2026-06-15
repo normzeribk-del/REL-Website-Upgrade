@@ -30,7 +30,10 @@ const PROJECT_TYPE_LABELS: Record<string, string> = {
 };
 
 async function sendEmailNotification(submission: ContactSubmission & { id: string }) {
-  const resendKey = Deno.env.get("RESEND_API_KEY") ?? "re_2t3WbzB4_6SgwFE4enzs6WQxbTMHj7ZhU";
+  const resendKey = Deno.env.get("RESEND_API_KEY");
+  if (!resendKey) {
+    throw new Error("RESEND_API_KEY secret is not set in Supabase");
+  }
 
   const projectTypeLabel = PROJECT_TYPE_LABELS[submission.project_type] ?? submission.project_type;
   const preferredContact = submission.preferred_contact ?? "email";
