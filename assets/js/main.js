@@ -608,3 +608,16 @@ window.prevImage = prevImage;
   style.textContent = '@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }';
   document.head.appendChild(style);
 })();
+
+// ---- About section slideshow ----
+(function () {
+  const slides = document.querySelectorAll('.about-slide');
+  if (slides.length > 1) {
+    let current = 0;
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 3500);
+  }
+})();
