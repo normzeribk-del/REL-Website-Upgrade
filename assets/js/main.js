@@ -162,6 +162,8 @@ document.addEventListener('DOMContentLoaded', function () {
           <p>${project.short_description || ''}</p>
           <div class="project-meta">
             ${project.location ? `<span><i class="fas fa-map-marker-alt"></i> ${project.location}</span>` : ''}
+            ${project.project_value ? `<span><i class="fas fa-coins"></i> ${project.project_value}</span>` : ''}
+            ${project.duration ? `<span><i class="fas fa-clock"></i> ${project.duration}</span>` : ''}
           </div>
         </div>
       </div>
@@ -213,77 +215,82 @@ document.addEventListener('DOMContentLoaded', function () {
     const metaContainer = document.getElementById('projectMeta');
     if (metaContainer) {
       metaContainer.innerHTML = `
-        <div class="project-detail-meta-item">
-          <div class="label">Client</div>
-          <div class="value">${project.client || 'Confidential'}</div>
-        </div>
-        <div class="project-detail-meta-item">
-          <div class="label">Location</div>
-          <div class="value">${project.location || 'Various'}</div>
-        </div>
-        <div class="project-detail-meta-item">
-          <div class="label">Year</div>
-          <div class="value">${project.year || 'Ongoing'}</div>
-        </div>
-        ${project.project_value ? `
-          <div class="project-detail-meta-item">
-            <div class="label">Project Value</div>
-            <div class="value">${project.project_value}</div>
-          </div>
-        ` : ''}
-        ${project.duration ? `
-          <div class="project-detail-meta-item">
-            <div class="label">Duration</div>
-            <div class="value">${project.duration}</div>
-          </div>
-        ` : ''}
+        <div class="project-summary-kicker">Project Snapshot</div>
+        <table class="project-summary-table">
+          <tbody>
+            <tr>
+              <th>Client</th>
+              <td>${project.client || 'Confidential'}</td>
+            </tr>
+            <tr>
+              <th>Location</th>
+              <td>${project.location || 'Various'}</td>
+            </tr>
+            <tr>
+              <th>Year</th>
+              <td>${project.year || 'Ongoing'}</td>
+            </tr>
+            <tr>
+              <th>Project Value</th>
+              <td>${project.project_value || 'Not specified'}</td>
+            </tr>
+            <tr>
+              <th>Duration</th>
+              <td>${project.duration || 'Not specified'}</td>
+            </tr>
+          </tbody>
+        </table>
       `;
     }
 
     const infoGrid = document.getElementById('projectInfoGrid');
     if (infoGrid) {
-      const cards = [];
+      const categoryEl = document.getElementById('projectCategory');
+      if (categoryEl) categoryEl.textContent = formatCategory(project.category) || '-';
 
-      if (project.scope) {
-        const pills = Array.isArray(project.scope)
-          ? project.scope.map(s => `<span class="scope-pill">${s}</span>`).join('')
-          : `<span class="scope-pill">${project.scope}</span>`;
-        cards.push({ icon: 'fas fa-clipboard-list', label: 'Project Scope', value: pills, wide: true });
-      }
+      const clientEl = document.getElementById('projectClient');
+      if (clientEl) clientEl.textContent = project.client || '-';
 
-      if (project.category) {
-        cards.push({ icon: 'fas fa-tag', label: 'Category', value: formatCategory(project.category) });
-      }
+      const locationEl = document.getElementById('projectLocation');
+      if (locationEl) locationEl.textContent = project.location || '-';
 
-      if (project.client) {
-        cards.push({ icon: 'fas fa-building', label: 'Client', value: project.client });
-      }
-
-      if (project.year) {
-        cards.push({ icon: 'fas fa-calendar-alt', label: 'Year', value: project.year });
-      }
-
-      if (project.location) {
-        cards.push({ icon: 'fas fa-map-marker-alt', label: 'Location', value: project.location });
+      const statusEl = document.getElementById('projectStatus');
+      if (statusEl) {
+        statusEl.textContent = project.completed_date ? 'Completed' : (project.status === 'published' ? 'Completed' : 'In Progress');
       }
 
       if (project.project_value) {
-        cards.push({ icon: 'fas fa-coins', label: 'Project Value', value: project.project_value, accent: true });
+        const valueCard = document.createElement('div');
+        valueCard.className = 'project-info-card';
+        valueCard.innerHTML = `
+          <div class="pic-icon-wrap"><i class="fas fa-coins"></i></div>
+          <h4>Project Value</h4>
+          <div class="value">${project.project_value}</div>
+        `;
+        infoGrid.appendChild(valueCard);
       }
 
       if (project.duration) {
-        cards.push({ icon: 'fas fa-clock', label: 'Duration', value: project.duration });
+        const durationCard = document.createElement('div');
+        durationCard.className = 'project-info-card';
+        durationCard.innerHTML = `
+          <div class="pic-icon-wrap"><i class="fas fa-clock"></i></div>
+          <h4>Duration</h4>
+          <div class="value">${project.duration}</div>
+        `;
+        infoGrid.appendChild(durationCard);
       }
 
-      cards.push({ icon: 'fas fa-circle-check', label: 'Status', value: 'Completed', success: true });
-
-      infoGrid.innerHTML = cards.map(card => `
-        <div class="project-info-card${card.wide ? ' pic-wide' : ''}">
-          <div class="pic-icon"><i class="${card.icon}"></i></div>
-          <h4>${card.label}</h4>
-          <div class="value${card.success ? ' pic-success' : card.accent ? ' pic-accent' : ''}${card.wide ? ' pic-pills' : ''}">${card.value}</div>
-        </div>
-      `).join('');
+      if (project.scope && project.scope.length > 0) {
+        const scopeCard = document.createElement('div');
+        scopeCard.className = 'project-info-card pic-scope';
+        scopeCard.innerHTML = `
+          <div class="pic-icon-wrap pic-icon-accent"><i class="fas fa-list-check"></i></div>
+          <h4>Project Scope</h4>
+          <ul class="pic-scope-list">${project.scope.map(s => `<li>${s}</li>`).join('')}</ul>
+        `;
+        infoGrid.insertBefore(scopeCard, infoGrid.firstChild);
+      }
     }
 
     const challengesSection = document.getElementById('projectChallenges');
@@ -331,38 +338,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   async function loadGallery() {
-    try {
-      const { data: images, error } = await supabase
-        .from('gallery_images')
-        .select('*')
-        .eq('status', 'published')
-        .order('display_order', { ascending: true });
-
-      if (error) throw error;
-
-      if (images && images.length > 0) {
-        window.galleryImages = images;
-        renderGallery(images);
-      }
-    } catch (err) {
-      console.error('Error loading gallery:', err);
-    }
-  }
-
-  function renderGallery(images) {
-    galleryContainer.innerHTML = images.map((img, idx) => `
-      <div class="gallery-item" data-category="${img.category}" data-aos onclick="openLightbox(${idx})">
-        <img src="${img.thumbnail_url || img.image_url}" alt="${img.title}" loading="lazy">
-        <div class="gallery-item-overlay">
-          <div>
-            <div class="gallery-item-title">${img.title}</div>
-            <div class="gallery-item-category">${formatCategory(img.category)}</div>
-          </div>
-        </div>
-      </div>
-    `).join('');
-
-    initAnimations();
+    // Gallery uses local images from static HTML only
   }
 
   // ---- Gallery Filter ----
@@ -643,17 +619,4 @@ window.prevImage = prevImage;
   const style = document.createElement('style');
   style.textContent = '@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }';
   document.head.appendChild(style);
-})();
-
-// ---- About section slideshow ----
-(function () {
-  const slides = document.querySelectorAll('.about-slide');
-  if (slides.length > 1) {
-    let current = 0;
-    setInterval(() => {
-      slides[current].classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-    }, 3500);
-  }
 })();
