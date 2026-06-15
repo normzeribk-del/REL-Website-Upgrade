@@ -241,13 +241,31 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const infoGrid = document.getElementById('projectInfoGrid');
-    if (infoGrid && project.scope) {
-      infoGrid.innerHTML = `
-        <div class="project-info-card">
+    if (infoGrid) {
+      const categoryEl = document.getElementById('projectCategory');
+      if (categoryEl) categoryEl.textContent = formatCategory(project.category) || '-';
+
+      const clientEl = document.getElementById('projectClient');
+      if (clientEl) clientEl.textContent = project.client || '-';
+
+      const locationEl = document.getElementById('projectLocation');
+      if (locationEl) locationEl.textContent = project.location || '-';
+
+      const statusEl = document.getElementById('projectStatus');
+      if (statusEl) {
+        statusEl.textContent = project.completed_date ? 'Completed' : (project.status === 'published' ? 'Completed' : 'In Progress');
+      }
+
+      if (project.scope && project.scope.length > 0) {
+        const scopeCard = document.createElement('div');
+        scopeCard.className = 'project-info-card pic-scope';
+        scopeCard.innerHTML = `
+          <div class="pic-icon-wrap pic-icon-accent"><i class="fas fa-list-check"></i></div>
           <h4>Project Scope</h4>
-          <div class="value">${Array.isArray(project.scope) ? project.scope.join(', ') : project.scope}</div>
-        </div>
-      ` + infoGrid.innerHTML;
+          <ul class="pic-scope-list">${project.scope.map(s => `<li>${s}</li>`).join('')}</ul>
+        `;
+        infoGrid.insertBefore(scopeCard, infoGrid.firstChild);
+      }
     }
 
     const challengesSection = document.getElementById('projectChallenges');
