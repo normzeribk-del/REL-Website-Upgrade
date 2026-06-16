@@ -172,6 +172,36 @@ document.addEventListener('DOMContentLoaded', function () {
     initAnimations();
   }
 
+  // ---- About Section Project Photo Slider ----
+  const aboutImageSlider = document.querySelector('.about-image-slider');
+  if (aboutImageSlider) {
+    const slides = Array.from(aboutImageSlider.querySelectorAll('.slider-slide'));
+    const dots = Array.from(aboutImageSlider.querySelectorAll('.slider-dot'));
+    const prevBtn = aboutImageSlider.querySelector('.slider-prev');
+    const nextBtn = aboutImageSlider.querySelector('.slider-next');
+    let currentSlide = 0;
+
+    function goToSlide(index) {
+      if (!slides.length) return;
+      currentSlide = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === currentSlide));
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
+    }
+
+    function showNextSlide() {
+      goToSlide(currentSlide + 1);
+    }
+
+    function showPrevSlide() {
+      goToSlide(currentSlide - 1);
+    }
+
+    prevBtn?.addEventListener('click', showPrevSlide);
+    nextBtn?.addEventListener('click', showNextSlide);
+    dots.forEach((dot, index) => dot.addEventListener('click', () => goToSlide(index)));
+    goToSlide(0);
+  }
+
   // ---- Load Single Project Detail ----
   const projectDetailContent = document.getElementById('projectDetailContent');
   if (projectDetailContent) {

@@ -13,21 +13,15 @@
   <!-- ========== HEADER ========== -->
   <header class="site-header" id="siteHeader">
     <div class="container">
-      <div class="header-top">
+      <div class="header-inner">
         <a href="index.html" class="logo">
           <img src="assets/images/REL02_Logo.jpg" class="logo-mark" alt="Rumbam Engineers">
           <div class="logo-text">
             <span class="name">Rumbam Engineers</span>
+            <span class="tagline">Project Managers &bull; Planners &bull; Consulting Engineers</span>
           </div>
         </a>
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-      <div class="header-sub">
-        Project Managers &bull; Planners &bull; Consulting Engineers
-      </div>
-      <nav class="nav-menu" id="navMenu">
+        <nav class="nav-menu" id="navMenu">
         <a href="index.html" class="active">Home</a>
         <a href="about.html">About Us</a>
         <a href="services.html">Services</a>
@@ -38,6 +32,10 @@
           <a href="contact.html" class="btn btn-accent btn-sm">Work With Us</a>
         </div>
       </nav>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      </div>
     </div>
   </header>
 
@@ -185,10 +183,27 @@
       <div class="about-cols">
         <div class="about-image-block" data-aos>
           <div class="about-image-main">
-            <div class="about-image-stack">
-              <img src="assets/s-image/P80826-094359.jpg" alt="Engineering project image" class="about-main-photo">
-              <img src="assets/s-image/P80827-092114.jpg" alt="Project progress image" class="about-thumb about-thumb-top">
-              <img src="assets/s-image/P80827-141802.jpg" alt="Site image" class="about-thumb about-thumb-bottom">
+            <div class="about-image-slider">
+              <div class="slider-slide active">
+                <img src="assets/s-image/Project_photo/IMG_1347.JPG" alt="Project photo slide 1" class="about-main-photo">
+              </div>
+              <div class="slider-slide">
+                <img src="assets/s-image/Project_photo/IMG_1352.JPG" alt="Project photo slide 2" class="about-main-photo">
+              </div>
+              <div class="slider-slide">
+                <img src="assets/s-image/Project_photo/IMG_1360.JPG" alt="Project photo slide 3" class="about-main-photo">
+              </div>
+              <button class="slider-control slider-prev" type="button" aria-label="Previous image">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="slider-control slider-next" type="button" aria-label="Next image">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              <div class="slider-dots">
+                <button class="slider-dot active" type="button" aria-label="Slide 1"></button>
+                <button class="slider-dot" type="button" aria-label="Slide 2"></button>
+                <button class="slider-dot" type="button" aria-label="Slide 3"></button>
+              </div>
             </div>
           </div>
           <div class="about-badge-card">
@@ -256,7 +271,7 @@
 
         <div class="project-card" data-category="transport" data-aos>
           <div class="project-image">
-            <img src="assets/s-image/P80826-094359.jpg" alt="Bridge Construction Progress" loading="lazy">
+            <img src="assets/s-image/Project_photo/IMG_1347.JPG" alt="Bridge Construction Progress" loading="lazy">
             <span class="project-tag">Transport</span>
             <span class="project-status-badge">Completed</span>
             <a href="projects.html" class="project-link-btn">
@@ -278,7 +293,7 @@
 
         <div class="project-card" data-category="civil" data-aos>
           <div class="project-image">
-            <img src="assets/s-image/P80827-092114.jpg" alt="Kanudi Water & Sewerage Network" loading="lazy">
+            <img src="assets/s-image/Project_photo/IMG_1352.JPG" alt="Kanudi Water & Sewerage Network" loading="lazy">
             <span class="project-tag">Civil</span>
             <span class="project-status-badge">Completed</span>
             <a href="projects.html" class="project-link-btn">
@@ -300,7 +315,7 @@
 
         <div class="project-card" data-category="structural" data-aos>
           <div class="project-image">
-            <img src="assets/s-image/P80827-141802.jpg" alt="Steel Structure Erection" loading="lazy">
+            <img src="assets/s-image/Project_photo/IMG_1360.JPG" alt="Steel Structure Erection" loading="lazy">
             <span class="project-tag">Structural</span>
             <span class="project-status-badge">Completed</span>
             <a href="projects.html" class="project-link-btn">
@@ -414,12 +429,6 @@
             </div>
           </a>
           <p>A proud Papua New Guinea engineering firm.</p>
-          <div class="footer-socials">
-            <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          </div>
         </div>
 
         <div class="footer-col">

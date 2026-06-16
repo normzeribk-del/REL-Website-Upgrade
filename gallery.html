@@ -13,21 +13,15 @@
   <!-- ========== HEADER ========== -->
   <header class="site-header" id="siteHeader">
     <div class="container">
-      <div class="header-top">
+      <div class="header-inner">
         <a href="index.html" class="logo">
           <img src="assets/images/REL02_Logo.jpg" class="logo-mark" alt="Rumbam Engineers">
           <div class="logo-text">
             <span class="name">Rumbam Engineers</span>
+            <span class="tagline">Project Managers &bull; Planners &bull; Consulting Engineers</span>
           </div>
         </a>
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-      <div class="header-sub">
-        Project Managers &bull; Planners &bull; Consulting Engineers
-      </div>
-      <nav class="nav-menu" id="navMenu">
+        <nav class="nav-menu" id="navMenu">
         <a href="index.html">Home</a>
         <a href="about.html">About Us</a>
         <a href="services.html">Services</a>
@@ -38,6 +32,10 @@
           <a href="contact.html" class="btn btn-accent btn-sm">Work With Us</a>
         </div>
       </nav>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      </div>
     </div>
   </header>
 
@@ -87,7 +85,7 @@
       <div class="gallery-grid" id="galleryContainer">
 
         <div class="gallery-item" data-category="transport" data-aos onclick="openLightbox(0)">
-          <img src="assets/s-image/P80826-094359.jpg" alt="Bridge Construction Progress" loading="lazy">
+          <img src="assets/s-image/REL Photo/P80826-094359.jpg" alt="Bridge Construction Progress" loading="lazy">
           <div class="gallery-item-overlay">
             <div>
               <div class="gallery-item-title">Bridge Construction Progress</div>
@@ -97,7 +95,7 @@
         </div>
 
         <div class="gallery-item" data-category="civil" data-aos onclick="openLightbox(1)">
-          <img src="assets/s-image/P80827-092114.jpg" alt="Concrete Pour Operations" loading="lazy">
+          <img src="assets/s-image/REL Photo/P80827-092114.jpg" alt="Concrete Pour Operations" loading="lazy">
           <div class="gallery-item-overlay">
             <div>
               <div class="gallery-item-title">Concrete Pour Operations</div>
@@ -107,7 +105,7 @@
         </div>
 
         <div class="gallery-item" data-category="structural" data-aos onclick="openLightbox(2)">
-          <img src="assets/s-image/P80827-141802.jpg" alt="Steel Structure Erection" loading="lazy">
+          <img src="assets/s-image/REL Photo/P80827-141802.jpg" alt="Steel Structure Erection" loading="lazy">
           <div class="gallery-item-overlay">
             <div>
               <div class="gallery-item-title">Steel Structure Erection</div>
@@ -117,7 +115,7 @@
         </div>
 
         <div class="gallery-item" data-category="civil" data-aos onclick="openLightbox(3)">
-          <img src="assets/s-image/Oct_S145L12.jpg" alt="Site Survey Works" loading="lazy">
+          <img src="assets/s-image/REL Photo/Oct_S145L12.jpg" alt="Site Survey Works" loading="lazy">
           <div class="gallery-item-overlay">
             <div>
               <div class="gallery-item-title">Site Survey Works</div>
@@ -127,7 +125,7 @@
         </div>
 
         <div class="gallery-item" data-category="environmental" data-aos onclick="openLightbox(4)">
-          <img src="assets/s-image/Saturday_131208 029.jpg" alt="Construction Site Operations" loading="lazy">
+          <img src="assets/s-image/REL Photo/Saturday_131208 029.jpg" alt="Construction Site Operations" loading="lazy">
           <div class="gallery-item-overlay">
             <div>
               <div class="gallery-item-title">Construction Site Operations</div>
@@ -137,7 +135,7 @@
         </div>
 
         <div class="gallery-item" data-category="transport" data-aos onclick="openLightbox(5)">
-          <img src="assets/s-image/Saturday_131208 047.jpg" alt="Infrastructure Development" loading="lazy">
+          <img src="assets/s-image/REL Photo/Saturday_131208 047.jpg" alt="Infrastructure Development" loading="lazy">
           <div class="gallery-item-overlay">
             <div>
               <div class="gallery-item-title">Infrastructure Development</div>
@@ -146,6 +144,35 @@
           </div>
         </div>
 
+        <div class="gallery-item" data-category="civil" data-aos onclick="openLightbox(6)">
+          <img src="assets/s-image/Project_photo/IMG_1347.JPG" alt="Project Site Works" loading="lazy">
+          <div class="gallery-item-overlay">
+            <div>
+              <div class="gallery-item-title">Project Site Works</div>
+              <div class="gallery-item-category">Civil</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item" data-category="structural" data-aos onclick="openLightbox(7)">
+          <img src="assets/s-image/Project_photo/IMG_1352.JPG" alt="Construction Progress" loading="lazy">
+          <div class="gallery-item-overlay">
+            <div>
+              <div class="gallery-item-title">Construction Progress</div>
+              <div class="gallery-item-category">Structural</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item" data-category="civil" data-aos onclick="openLightbox(8)">
+          <img src="assets/s-image/Project_photo/IMG_1360.JPG" alt="Site Operations" loading="lazy">
+          <div class="gallery-item-overlay">
+            <div>
+              <div class="gallery-item-title">Site Operations</div>
+              <div class="gallery-item-category">Civil</div>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -182,11 +209,6 @@
             </div>
           </a>
           <p>A proud Papua New Guinea engineering firm.</p>
-          <div class="footer-socials">
-            <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          </div>
         </div>
         <div class="footer-col">
           <h5>Quick Links</h5>
@@ -253,12 +275,15 @@
   <script>
     // Gallery images data for lightbox
     window.galleryImages = [
-      { image_url: 'assets/s-image/P80826-094359.jpg', title: 'Bridge Construction Progress', category: 'transport' },
-      { image_url: 'assets/s-image/P80827-092114.jpg', title: 'Concrete Pour Operations', category: 'civil' },
-      { image_url: 'assets/s-image/P80827-141802.jpg', title: 'Steel Structure Erection', category: 'structural' },
-      { image_url: 'assets/s-image/Oct_S145L12.jpg', title: 'Site Survey Works', category: 'civil' },
-      { image_url: 'assets/s-image/Saturday_131208 029.jpg', title: 'Construction Site Operations', category: 'environmental' },
-      { image_url: 'assets/s-image/Saturday_131208 047.jpg', title: 'Infrastructure Development', category: 'transport' }
+      { image_url: 'assets/s-image/REL Photo/P80826-094359.jpg', title: 'Bridge Construction Progress', category: 'transport' },
+      { image_url: 'assets/s-image/REL Photo/P80827-092114.jpg', title: 'Concrete Pour Operations', category: 'civil' },
+      { image_url: 'assets/s-image/REL Photo/P80827-141802.jpg', title: 'Steel Structure Erection', category: 'structural' },
+      { image_url: 'assets/s-image/REL Photo/Oct_S145L12.jpg', title: 'Site Survey Works', category: 'civil' },
+      { image_url: 'assets/s-image/REL Photo/Saturday_131208 029.jpg', title: 'Construction Site Operations', category: 'environmental' },
+      { image_url: 'assets/s-image/REL Photo/Saturday_131208 047.jpg', title: 'Infrastructure Development', category: 'transport' },
+      { image_url: 'assets/s-image/Project_photo/IMG_1347.JPG', title: 'Project Site Works', category: 'civil' },
+      { image_url: 'assets/s-image/Project_photo/IMG_1352.JPG', title: 'Construction Progress', category: 'structural' },
+      { image_url: 'assets/s-image/Project_photo/IMG_1360.JPG', title: 'Site Operations', category: 'civil' }
     ];
   </script>
   <script src="assets/js/main.js" type="module"></script>
