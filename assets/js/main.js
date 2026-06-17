@@ -118,6 +118,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
     });
+
+    // Apply filter from URL param on page load (e.g. ?filter=civil from services page)
+    const urlParams = new URLSearchParams(window.location.search);
+    const filterParam = urlParams.get('filter');
+    if (filterParam) {
+      const targetBtn = filterBar.querySelector('[data-filter="' + filterParam + '"]');
+      if (targetBtn) targetBtn.click();
+    }
   }
 
   // ---- Load Projects from Database ----
@@ -339,9 +347,36 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const galleryContainer = document.getElementById('projectGallery');
-    if (galleryContainer && project.gallery_images && project.gallery_images.length > 0) {
-      galleryContainer.innerHTML = project.gallery_images.map((img, idx) => `
-        <div class="project-detail-gallery-item" data-image="${img}" onclick="openLightbox(${idx}, ${JSON.stringify(project.gallery_images).replace(/"/g, '&quot;')})">
+    const localGalleryMap = {
+      'environmental-remediation-project': [
+        'assets/s-image/Project_photo/Picture 363.jpg',
+        'assets/s-image/Project_photo/ALL_IN_CAM_(_22122009) 194.jpg'
+      ],
+      'provincial-airport-terminal': [
+        'assets/s-image/Project_photo/images.jpg',
+        'assets/s-image/Project_photo/Screenshot-2023-06-29-214406-1-q8obtmido3otdbs3biq9bfrwwe7aam02y35755hfaw.png'
+      ],
+      'industrial-warehouse-facility': [
+        'assets/s-image/Project_photo/Warehouses-Brighter-Crop-1-scaled.jpg'
+      ],
+      'commercial-high-rise-complex': [
+        'assets/s-image/Project_photo/download Apex.jpg',
+        'assets/s-image/Project_photo/unnamed.jpg'
+      ],
+      'highway-bridge-reconstruction': [
+        'assets/s-image/Project_photo/bridge-site-inspection.jpg',
+        'assets/s-image/Project_photo/bridge-river-crossing.jpg',
+        'assets/s-image/Project_photo/bridge-road-roller.jpg',
+        'assets/s-image/Project_photo/bridge-road-shoulder.jpg',
+        'assets/s-image/Project_photo/bridge-road-grading.jpg',
+        'assets/s-image/Project_photo/bridge-abutment-construction.jpg'
+      ]
+    };
+    const galleryImages = localGalleryMap[project.slug] || project.gallery_images;
+
+    if (galleryContainer && galleryImages && galleryImages.length > 0) {
+      galleryContainer.innerHTML = galleryImages.map((img, idx) => `
+        <div class="project-detail-gallery-item" data-image="${img}" onclick="openLightbox(${idx}, ${JSON.stringify(galleryImages).replace(/"/g, '&quot;')})">
           <img src="${img}" alt="${project.title} - Image ${idx + 1}" loading="lazy">
         </div>
       `).join('');
