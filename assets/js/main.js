@@ -170,7 +170,6 @@ document.addEventListener('DOMContentLoaded', function () {
           <p>${project.short_description || ''}</p>
           <div class="project-meta">
             ${project.location ? `<span><i class="fas fa-map-marker-alt"></i> ${project.location}</span>` : ''}
-            ${project.project_value ? `<span><i class="fas fa-coins"></i> ${project.project_value}</span>` : ''}
             ${project.duration ? `<span><i class="fas fa-clock"></i> ${project.duration}</span>` : ''}
           </div>
         </div>
@@ -269,10 +268,6 @@ document.addEventListener('DOMContentLoaded', function () {
               <td>${project.year || 'Ongoing'}</td>
             </tr>
             <tr>
-              <th>Project Value</th>
-              <td>${project.project_value || 'Not specified'}</td>
-            </tr>
-            <tr>
               <th>Duration</th>
               <td>${project.duration || 'Not specified'}</td>
             </tr>
@@ -295,17 +290,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const statusEl = document.getElementById('projectStatus');
       if (statusEl) {
         statusEl.textContent = project.completed_date ? 'Completed' : (project.status === 'published' ? 'Completed' : 'In Progress');
-      }
-
-      if (project.project_value) {
-        const valueCard = document.createElement('div');
-        valueCard.className = 'project-info-card';
-        valueCard.innerHTML = `
-          <div class="pic-icon-wrap"><i class="fas fa-coins"></i></div>
-          <h4>Project Value</h4>
-          <div class="value">${project.project_value}</div>
-        `;
-        infoGrid.appendChild(valueCard);
       }
 
       if (project.duration) {
@@ -364,12 +348,12 @@ document.addEventListener('DOMContentLoaded', function () {
         'assets/s-image/Project_photo/unnamed.jpg'
       ],
       'highway-bridge-reconstruction': [
-        'assets/s-image/Project_photo/bridge-site-inspection.jpg',
-        'assets/s-image/Project_photo/bridge-river-crossing.jpg',
-        'assets/s-image/Project_photo/bridge-road-roller.jpg',
-        'assets/s-image/Project_photo/bridge-road-shoulder.jpg',
-        'assets/s-image/Project_photo/bridge-road-grading.jpg',
-        'assets/s-image/Project_photo/bridge-abutment-construction.jpg'
+        'assets/s-image/Project_photo/download bridge.jpg',
+        'assets/s-image/Project_photo/images (1) bridge.jpg'
+      ],
+      'municipal-water-treatment-plant': [
+        'assets/s-image/Project_photo/Water-PNG-1.webp',
+        'assets/s-image/Project_photo/Water-PNG-2.webp'
       ]
     };
     const galleryImages = localGalleryMap[project.slug] || project.gallery_images;
