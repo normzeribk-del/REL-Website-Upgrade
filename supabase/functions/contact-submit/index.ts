@@ -74,7 +74,7 @@ async function sendEmailNotification(submission: ContactSubmission & { id: strin
 
   await client.send({
     from: Deno.env.get("SMTP_USER")!,
-    to: "normzeribk@gmail.com",
+    to: ["brumbam@rumbamengineers.com", "info@rumbamengineers.com"],
     subject: `New Enquiry: ${submission.first_name} ${submission.last_name} — ${projectTypeLabel}`,
     content: "text/html",
     html: htmlBody,
