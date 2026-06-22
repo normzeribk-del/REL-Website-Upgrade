@@ -69,7 +69,7 @@ async function sendEmailNotification(submission: ContactSubmission & { id: strin
     },
     body: JSON.stringify({
       from: "Rumbam Engineers Contact Form <noreply@rumbamengineers.com>",
-      to: ["brumbam@rumbamengineers.com"],
+      to: ["info@rumbamengineers.com"],
       reply_to: submission.email,
       subject: `New Enquiry: ${submission.first_name} ${submission.last_name} — ${projectTypeLabel}`,
       html: htmlBody,
