@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -30,8 +31,6 @@ const PROJECT_TYPE_LABELS: Record<string, string> = {
 };
 
 async function sendEmailNotification(submission: ContactSubmission & { id: string }) {
-  const resendKey = Deno.env.get("RESEND_API_KEY") ?? "re_2t3WbzB4_6SgwFE4enzs6WQxbTMHj7ZhU";
-
   const projectTypeLabel = PROJECT_TYPE_LABELS[submission.project_type] ?? submission.project_type;
   const preferredContact = submission.preferred_contact ?? "email";
 
@@ -61,20 +60,27 @@ async function sendEmailNotification(submission: ContactSubmission & { id: strin
     </div>
   `;
 
-  await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${resendKey}`,
-      "Content-Type": "application/json",
+  const client = new SMTPClient({
+    connection: {
+      hostname: "smtp.gmail.com",
+      port: 465,
+      tls: true,
+      auth: {
+        username: Deno.env.get("SMTP_USER")!,
+        password: Deno.env.get("SMTP_PASS")!,
+      },
     },
-    body: JSON.stringify({
-      from: "Rumbam Engineers Contact Form <noreply@rumbamengineers.com>",
-      to: ["info@rumbamengineers.com"],
-      reply_to: submission.email,
-      subject: `New Enquiry: ${submission.first_name} ${submission.last_name} — ${projectTypeLabel}`,
-      html: htmlBody,
-    }),
   });
+
+  await client.send({
+    from: Deno.env.get("SMTP_USER")!,
+    to: "normzeribk@gmail.com",
+    subject: `New Enquiry: ${submission.first_name} ${submission.last_name} — ${projectTypeLabel}`,
+    content: "text/html",
+    html: htmlBody,
+  });
+
+  await client.close();
 }
 
 Deno.serve(async (req: Request) => {
