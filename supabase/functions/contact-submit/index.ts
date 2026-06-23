@@ -1,6 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
-import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -72,29 +71,32 @@ async function sendEmailNotification(
     </div>
   `;
 
-  const client = new SMTPClient({
-    connection: {
-      hostname: "smtp.gmail.com",
-      port: 465,
-      tls: true,
-      auth: {
-        username: Deno.env.get("SMTP_USER")!,
-        password: Deno.env.get("SMTP_PASS")!,
-      },
-    },
-  });
+  const resendApiKey = Deno.env.get("RESEND_API_KEY");
+  if (!resendApiKey) throw new Error("RESEND_API_KEY secret is not set");
 
-  const mailOptions = {
-    from: Deno.env.get("SMTP_USER")!,
-    subject: `New Enquiry: ${submission.first_name} ${submission.last_name} — ${projectTypeLabel}`,
-    html: htmlBody,
-  };
+  const subject = `New Enquiry: ${submission.first_name} ${submission.last_name} — ${projectTypeLabel}`;
 
   for (const recipient of recipients) {
-    await client.send({ ...mailOptions, to: recipient.email });
-  }
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "Rumbam Engineers <onboarding@resend.dev>",
+        to: [recipient.email],
+        subject,
+        html: htmlBody,
+        reply_to: submission.email,
+      }),
+    });
 
-  await client.close();
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(`Resend API error ${res.status}: ${errText}`);
+    }
+  }
 }
 
 Deno.serve(async (req: Request) => {
