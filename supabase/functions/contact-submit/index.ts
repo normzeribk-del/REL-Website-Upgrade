@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -61,25 +62,27 @@ async function sendEmailNotification(
     </div>
   `;
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
-      "Content-Type": "application/json",
+  const client = new SMTPClient({
+    connection: {
+      hostname: "smtp.gmail.com",
+      port: 465,
+      tls: true,
+      auth: {
+        username: Deno.env.get("SMTP_USER")!,
+        password: Deno.env.get("SMTP_PASS")!,
+      },
     },
-    body: JSON.stringify({
-      from: "Rumbam Engineers <onboarding@resend.dev>",
-      to: ["lurumbam@gmail.com"],
-      subject: `New Enquiry: ${submission.first_name} ${submission.last_name} — ${projectTypeLabel}`,
-      html: htmlBody,
-      reply_to: submission.email,
-    }),
   });
 
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Resend API error ${res.status}: ${err}`);
-  }
+  await client.send({
+    from: Deno.env.get("SMTP_USER")!,
+    to: "lurumbam@gmail.com",
+    subject: `New Enquiry: ${submission.first_name} ${submission.last_name} — ${projectTypeLabel}`,
+    content: "text/html",
+    html: htmlBody,
+  });
+
+  await client.close();
 }
 
 Deno.serve(async (req: Request) => {
