@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -30,20 +31,10 @@ const PROJECT_TYPE_LABELS: Record<string, string> = {
 };
 
 async function sendEmailNotification(
-  submission: ContactSubmission & { id: string },
-  supabase: ReturnType<typeof createClient>
+  submission: ContactSubmission & { id: string }
 ) {
   const projectTypeLabel = PROJECT_TYPE_LABELS[submission.project_type] ?? submission.project_type;
   const preferredContact = submission.preferred_contact ?? "email";
-
-  const { data: recipients, error: recipientsError } = await supabase
-    .from("notification_recipients")
-    .select("email")
-    .eq("active", true);
-
-  if (recipientsError || !recipients || recipients.length === 0) {
-    throw new Error(recipientsError?.message ?? "No active notification recipients found");
-  }
 
   const htmlBody = `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#1a2b4a;">
@@ -71,32 +62,27 @@ async function sendEmailNotification(
     </div>
   `;
 
-  const resendApiKey = Deno.env.get("RESEND_API_KEY");
-  if (!resendApiKey) throw new Error("RESEND_API_KEY secret is not set");
-
-  const subject = `New Enquiry: ${submission.first_name} ${submission.last_name} — ${projectTypeLabel}`;
-
-  for (const recipient of recipients) {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json",
+  const client = new SMTPClient({
+    connection: {
+      hostname: "smtp.gmail.com",
+      port: 465,
+      tls: true,
+      auth: {
+        username: Deno.env.get("SMTP_USER")!,
+        password: Deno.env.get("SMTP_PASS")!,
       },
-      body: JSON.stringify({
-        from: "Rumbam Engineers <onboarding@resend.dev>",
-        to: [recipient.email],
-        subject,
-        html: htmlBody,
-        reply_to: submission.email,
-      }),
-    });
+    },
+  });
 
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(`Resend API error ${res.status}: ${errText}`);
-    }
-  }
+  await client.send({
+    from: Deno.env.get("SMTP_USER")!,
+    to: "lurumbam@gmail.com",
+    subject: `New Enquiry: ${submission.first_name} ${submission.last_name} — ${projectTypeLabel}`,
+    content: "text/html",
+    html: htmlBody,
+  });
+
+  await client.close();
 }
 
 Deno.serve(async (req: Request) => {
@@ -159,7 +145,7 @@ Deno.serve(async (req: Request) => {
     }
 
     try {
-      await sendEmailNotification({ ...body, id: data.id }, supabase);
+      await sendEmailNotification({ ...body, id: data.id });
       await supabase
         .from("contact_submissions")
         .update({ email_sent: true, email_sent_at: new Date().toISOString() })
