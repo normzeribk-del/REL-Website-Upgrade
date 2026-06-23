@@ -1,6 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
-import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -37,7 +36,6 @@ async function sendEmailNotification(
   const projectTypeLabel = PROJECT_TYPE_LABELS[submission.project_type] ?? submission.project_type;
   const preferredContact = submission.preferred_contact ?? "email";
 
-  // Fetch active recipients from the database
   const { data: recipients, error: recipientsError } = await supabase
     .from("notification_recipients")
     .select("email")
@@ -73,29 +71,26 @@ async function sendEmailNotification(
     </div>
   `;
 
-  const client = new SMTPClient({
-    connection: {
-      hostname: "smtp.gmail.com",
-      port: 465,
-      tls: true,
-      auth: {
-        username: Deno.env.get("SMTP_USER")!,
-        password: Deno.env.get("SMTP_PASS")!,
-      },
+  const toAddresses = recipients.map((r: { email: string }) => r.email);
+
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
+      "Content-Type": "application/json",
     },
+    body: JSON.stringify({
+      from: "Rumbam Engineers <noreply@rumbamengineers.com>",
+      to: toAddresses,
+      subject: `New Enquiry: ${submission.first_name} ${submission.last_name} — ${projectTypeLabel}`,
+      html: htmlBody,
+    }),
   });
 
-  const mailOptions = {
-    from: Deno.env.get("SMTP_USER")!,
-    subject: `New Enquiry: ${submission.first_name} ${submission.last_name} — ${projectTypeLabel}`,
-    html: htmlBody,
-  };
-
-  for (const recipient of recipients) {
-    await client.send({ ...mailOptions, to: recipient.email });
+  if (!res.ok) {
+    const resBody = await res.text();
+    throw new Error(`Resend API error ${res.status}: ${resBody}`);
   }
-
-  await client.close();
 }
 
 Deno.serve(async (req: Request) => {
@@ -157,7 +152,6 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Send email notification and record the outcome
     try {
       await sendEmailNotification({ ...body, id: data.id }, supabase);
       await supabase
