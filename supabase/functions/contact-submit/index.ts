@@ -30,9 +30,22 @@ const PROJECT_TYPE_LABELS: Record<string, string> = {
   other: "Other / General Enquiry",
 };
 
-async function sendEmailNotification(submission: ContactSubmission & { id: string }) {
+async function sendEmailNotification(
+  submission: ContactSubmission & { id: string },
+  supabase: ReturnType<typeof createClient>
+) {
   const projectTypeLabel = PROJECT_TYPE_LABELS[submission.project_type] ?? submission.project_type;
   const preferredContact = submission.preferred_contact ?? "email";
+
+  // Fetch active recipients from the database
+  const { data: recipients, error: recipientsError } = await supabase
+    .from("notification_recipients")
+    .select("email")
+    .eq("active", true);
+
+  if (recipientsError || !recipients || recipients.length === 0) {
+    throw new Error(recipientsError?.message ?? "No active notification recipients found");
+  }
 
   const htmlBody = `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#1a2b4a;">
@@ -78,8 +91,9 @@ async function sendEmailNotification(submission: ContactSubmission & { id: strin
     html: htmlBody,
   };
 
-  await client.send({ ...mailOptions, to: "brumbam@rumbamengineers.com" });
-  await client.send({ ...mailOptions, to: "info@rumbamengineers.com" });
+  for (const recipient of recipients) {
+    await client.send({ ...mailOptions, to: recipient.email });
+  }
 
   await client.close();
 }
@@ -143,11 +157,20 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Send email notification — failure does not block the submission response
+    // Send email notification and record the outcome
     try {
-      await sendEmailNotification({ ...body, id: data.id });
+      await sendEmailNotification({ ...body, id: data.id }, supabase);
+      await supabase
+        .from("contact_submissions")
+        .update({ email_sent: true, email_sent_at: new Date().toISOString() })
+        .eq("id", data.id);
     } catch (emailErr) {
-      console.error("Email notification failed:", emailErr);
+      const errMsg = emailErr instanceof Error ? emailErr.message : String(emailErr);
+      console.error("Email notification failed:", errMsg);
+      await supabase
+        .from("contact_submissions")
+        .update({ email_sent: false, email_error: errMsg })
+        .eq("id", data.id);
     }
 
     return new Response(
