@@ -72,13 +72,14 @@ async function sendEmailNotification(submission: ContactSubmission & { id: strin
     },
   });
 
-  await client.send({
+  const mailOptions = {
     from: Deno.env.get("SMTP_USER")!,
-    to: ["brumbam@rumbamengineers.com", "info@rumbamengineers.com"],
     subject: `New Enquiry: ${submission.first_name} ${submission.last_name} — ${projectTypeLabel}`,
-    content: "text/html",
     html: htmlBody,
-  });
+  };
+
+  await client.send({ ...mailOptions, to: "brumbam@rumbamengineers.com" });
+  await client.send({ ...mailOptions, to: "info@rumbamengineers.com" });
 
   await client.close();
 }
